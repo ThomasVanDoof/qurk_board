@@ -1,3 +1,12 @@
+## Team Members:
+1. Valentina Bass
+2. Marvin Canastuj
+3. Thomas Barney
+4. Charles Adam Davis
+
+# Description:
+A simple and helpful organization tool for your everyday needs!
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
