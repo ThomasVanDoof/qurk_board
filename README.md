@@ -5,7 +5,7 @@
 4. Charles Adam Davis
 
 # Description:
-A simple and helpful organization tool for your everyday needs!
+A simple and helpful organization tool for your everyday needs! It is a simple tool!
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
