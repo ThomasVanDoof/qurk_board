@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -47,9 +47,9 @@ export default function LoginPage() {
 						</div>
 						<button type="submit" className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-semibold tracking-wide text-sand shadow-sm transition-all hover:bg-green hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 active:scale-[0.99]" >Sign in</button>
 					</form>
-					<p className="mt-7 text-center text-sm text-forest/70">
-						Don't have an account?
-						<a href="#" className="font-semibold text-green transition-colors hover:text-forest" >Create one</a>
+					<p>
+  						Don't have an account?{" "}
+  						<Link href="/register">Create one</Link>
 					</p>
 				</div>
 			</div>
