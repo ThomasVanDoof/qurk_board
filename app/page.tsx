@@ -1,44 +1,44 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-zinc-50 text-zinc-900">
-     {/* Navigation Bar */}
-      <nav className="flex items-center justify-between border-b border-zinc-200 bg-white px-8 py-4">
-        {/* Placeholder Logo */}
+    <main className="min-h-screen bg-[#DAD7CD] text-[#344E41]">
+      {/* Navigation Bar */}
+      <nav className="flex items-center justify-between bg-[#344E41] px-8 py-4 text-white">
+        {/* Logo */}
         <a href="/" className="text-xl font-bold">
           Qurk Board
         </a>
 
         {/* Navigation Links */}
         <div className="flex items-center gap-6 text-sm font-medium">
-          <a href="/" className="hover:text-blue-600">
+          <a href="/" className="transition hover:text-[#A3B18A]">
             Home
           </a>
 
-          <a href="/board" className="hover:text-blue-600">
+          <a href="/board" className="transition hover:text-[#A3B18A]">
             Board
           </a>
 
-          <a href="/register" className="hover:text-blue-600">
+          <a href="/register" className="transition hover:text-[#A3B18A]">
             Register
           </a>
 
           {/* Profile Dropdown */}
           <details className="relative">
-            <summary className="cursor-pointer list-none hover:text-blue-600">
+            <summary className="cursor-pointer list-none transition hover:text-[#A3B18A]">
               Profile ▾
             </summary>
 
-            <div className="absolute right-0 mt-2 w-40 rounded-lg border border-zinc-200 bg-white p-2 shadow-lg">
+            <div className="absolute right-0 z-10 mt-2 w-40 rounded-lg border border-[#A3B18A] bg-white p-2 text-[#344E41] shadow-lg">
               <a
                 href="/profile"
-                className="block rounded-md px-3 py-2 hover:bg-zinc-100"
+                className="block rounded-md px-3 py-2 transition hover:bg-[#DAD7CD]"
               >
                 Profile
               </a>
 
               <a
                 href="/projects"
-                className="block rounded-md px-3 py-2 hover:bg-zinc-100"
+                className="block rounded-md px-3 py-2 transition hover:bg-[#DAD7CD]"
               >
                 Projects
               </a>
@@ -48,15 +48,19 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex min-h-[calc(100vh-73px)] flex-col items-center justify-center px-6 text-center">
+      <section className="flex min-h-[calc(100vh-73px)] flex-col items-center justify-center px-6 py-16 text-center">
         <div className="max-w-3xl">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-[#588157] text-3xl font-bold text-white shadow-md">
+            Q
+          </div>
+
+          <h1 className="text-5xl font-bold tracking-tight text-[#344E41] sm:text-6xl">
             Plan Your Ideas.
             <br />
-            <span className="text-blue-600">See the Bigger Picture.</span>
+            <span className="text-[#588157]">See the Bigger Picture.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-zinc-600">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#3A5A40]">
             Qurk Board is a visual organization tool that lets you turn your
             ideas and plans into digital notes, move them around, and connect
             them together with pathways.
@@ -65,40 +69,56 @@ export default function Home() {
           <div className="mt-8 flex justify-center gap-4">
             <a
               href="/board"
-              className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+              className="rounded-lg bg-[#588157] px-6 py-3 font-medium text-white shadow-sm transition hover:bg-[#3A5A40]"
             >
               Start a Board
             </a>
 
             <a
               href="/register"
-              className="rounded-lg border border-zinc-300 bg-white px-6 py-3 font-medium transition hover:bg-zinc-100"
+              className="rounded-lg border border-[#A3B18A] bg-white px-6 py-3 font-medium text-[#344E41] shadow-sm transition hover:bg-[#A3B18A]"
             >
               Create an Account
             </a>
           </div>
         </div>
 
-               {/* Simple Visual Preview */}
-        <div className="mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-yellow-300 bg-yellow-100 p-6 shadow-sm">
-            <h2 className="font-bold">Write</h2>
-            <p className="mt-2 text-sm text-zinc-700">
-              Add notes for your ideas and next steps.
+        {/* Feature Cards */}
+        <div className="mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#A3B18A] font-bold text-[#344E41]">
+              1
+            </div>
+
+            <h2 className="text-xl font-bold text-[#344E41]">Write</h2>
+
+            <p className="mt-2 leading-6 text-[#3A5A40]">
+              Add notes for your ideas, tasks, plans, and next steps.
             </p>
           </div>
 
-          <div className="rounded-lg border border-blue-300 bg-blue-100 p-6 shadow-sm">
-            <h2 className="font-bold">Move</h2>
-            <p className="mt-2 text-sm text-zinc-700">
-              Arrange your notes wherever they make sense.
+          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#588157] font-bold text-white">
+              2
+            </div>
+
+            <h2 className="text-xl font-bold text-[#344E41]">Move</h2>
+
+            <p className="mt-2 leading-6 text-[#3A5A40]">
+              Arrange your notes around the board so you can see your plan.
             </p>
           </div>
 
-          <div className="rounded-lg border border-green-300 bg-green-100 p-6 shadow-sm">
-            <h2 className="font-bold">Connect</h2>
-            <p className="mt-2 text-sm text-zinc-700">
-              Connect your ideas with arrows or digital string.
+          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
+              3
+            </div>
+
+            <h2 className="text-xl font-bold text-[#344E41]">Connect</h2>
+
+            <p className="mt-2 leading-6 text-[#3A5A40]">
+              Connect your ideas with arrows or digital string to show how
+              everything fits together.
             </p>
           </div>
         </div>
