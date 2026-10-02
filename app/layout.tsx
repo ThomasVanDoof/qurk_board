@@ -12,8 +12,8 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "Qurk Board",
-  description: "A visual organization tool for your ideas and plans.",
+  title: "Qurk Board | Your ideas, in place",
+  description: "A quiet space to capture and keep track of your thoughts.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
