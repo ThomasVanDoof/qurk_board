@@ -20,28 +20,51 @@ export default function RegisterPage() {
     confirmPassword?: string;
   }>({});
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+const handleSubmit = async (
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
 
-    const result = validateRegistrationData({
-      username,
-      email,
-      password,
-      confirmPassword,
+  const result = validateRegistrationData({
+    username,
+    email,
+    password,
+    confirmPassword,
+  });
+
+  setErrors(result.errors);
+
+  if (!result.valid) {
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        confirmPassword,
+      }),
     });
 
-    setErrors(result.errors);
+    const data = await response.json();
 
-    if (!result.valid) {
+    if (!response.ok) {
+      setErrors(data.errors || {});
       return;
     }
 
-    console.log("Registration data is valid:", {
-      username,
-      email,
-      password,
-    });
-  };
+    console.log("User created successfully:", data);
+
+  } catch (error) {
+    console.error("Registration error:", error);
+  }
+};
 
   return (
     <main className="min-h-full bg-[#DAD7CD] text-[#344E41]">
