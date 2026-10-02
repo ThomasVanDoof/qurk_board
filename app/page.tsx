@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#DAD7CD] text-[#344E41]">
@@ -71,16 +73,17 @@ export default function Home() {
               href="/board"
               className="rounded-lg bg-[#588157] px-6 py-3 font-medium text-white shadow-sm transition hover:bg-[#3A5A40]"
             >
-              Start a Board
-            </a>
-
+              Templates
+            </a>{" "}
+            or the{" "}
             <a
               href="/register"
               className="rounded-lg border border-[#A3B18A] bg-white px-6 py-3 font-medium text-[#344E41] shadow-sm transition hover:bg-[#A3B18A]"
             >
-              Create an Account
-            </a>
-          </div>
+              Learning
+            </a>{" "}
+            center.
+          </p>
         </div>
 
         {/* Feature Cards */}
@@ -122,7 +125,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
-    </main>
+      </main>
+    </div>
   );
 }
