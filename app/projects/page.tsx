@@ -19,51 +19,7 @@ const projects = [
 export default function Projects() {
   return (
     <main className="min-h-screen bg-[#DAD7CD] text-[#344E41]">
-      {/* Navigation Bar */}
-      <nav className="flex items-center justify-between bg-[#344E41] px-8 py-4 text-white">
-        {/* Logo */}
-        <a href="/" className="text-xl font-bold">
-          Qurk Board
-        </a>
-
-        {/* Navigation Links */}
-        <div className="flex items-center gap-6 text-sm font-medium">
-          <a href="/" className="transition hover:text-[#A3B18A]">
-            Home
-          </a>
-
-          <a href="/board" className="transition hover:text-[#A3B18A]">
-            Board
-          </a>
-
-          <a href="/register" className="transition hover:text-[#A3B18A]">
-            Register
-          </a>
-
-          {/* Profile Dropdown */}
-          <details className="relative">
-            <summary className="cursor-pointer list-none transition hover:text-[#A3B18A]">
-              Profile ▾
-            </summary>
-
-            <div className="absolute right-0 z-10 mt-2 w-40 rounded-lg border border-[#A3B18A] bg-white p-2 text-[#344E41] shadow-lg">
-              <a
-                href="/profile"
-                className="block rounded-md px-3 py-2 transition hover:bg-[#DAD7CD]"
-              >
-                Profile
-              </a>
-
-              <a
-                href="/projects"
-                className="block rounded-md bg-[#DAD7CD] px-3 py-2 font-medium"
-              >
-                Projects
-              </a>
-            </div>
-          </details>
-        </div>
-      </nav>
+    
 
       {/* Projects Section */}
       <section className="mx-auto max-w-6xl px-6 py-12">
