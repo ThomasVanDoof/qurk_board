@@ -1,17 +1,8 @@
-import "server-only";
-import { getDatabase } from "@/lib/db";
-import type { UserRecord } from "@/lib/auth/types";
+import client from "@/lib/mongodb";
 
 export async function findUserByEmail(email: string) {
-	const database = await getDatabase();
-	const normalizedEmail = email.trim().toLowerCase();
-	return database.collection<UserRecord>("users").findOne(
-		{
-			$or: [
-				{ emailNormalized: normalizedEmail },
-				{ email: normalizedEmail },
-			],
-		},
-		{ collation: { locale: "en", strength: 2 } },
-	);
+  const database = client.db("qurkboard");
+  const users = database.collection("users");
+
+  return await users.findOne({ email: email.trim().toLowerCase() });
 }
