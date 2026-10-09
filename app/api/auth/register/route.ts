@@ -1,5 +1,1 @@
-export async function POST(request: Request) {
-  return Response.json({
-    message: "Register endpoint",
-  });
-}
+export { POST } from "../sign-up/route";

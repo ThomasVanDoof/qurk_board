@@ -26,6 +26,12 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Authentication and deployment
+
+Copy `.env.example` to `.env.local` and set `MONGODB_DB_URI` to a MongoDB connection string and `MONGODB_DB_NAME` to the database name. The database account must be allowed to connect from the deployment environment.
+
+For Vercel, set both variables in the project's Environment Variables settings for every environment you deploy (Preview and Production). Keep the Vercel Root Directory set to this app's repository root. The production build can be checked with `npm run build`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

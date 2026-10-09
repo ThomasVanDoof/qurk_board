@@ -1,9 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+	const router = useRouter();
 	const [showPassword, setShowPassword] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		setError("");
+		setIsSubmitting(true);
+		try {
+			const response = await fetch("/api/auth/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, password }),
+			});
+			const result: { error?: string } = await response.json();
+			if (!response.ok) {
+				setError(result.error ?? "Sign in failed. Please try again.");
+				return;
+			}
+			router.replace("/board");
+			router.refresh();
+		} catch {
+			setError("Could not reach the server. Check your connection and try again.");
+		} finally {
+			setIsSubmitting(false);
+		}
+	}
 
 	return (
 		<main className="flex min-h-screen items-center justify-center bg-sand px-4 py-8">
@@ -18,10 +48,11 @@ export default function LoginPage() {
 						<h1 className="text-3xl font-semibold tracking-tight text-dark sm:text-4xl">Welcome back</h1>
 						<p className="mt-2 text-sm text-forest/75 sm:text-base">Sign in to continue to your account</p>
 					</div>
-					<form className="space-y-5 flex flex-col gap-4">
+					<form onSubmit={handleSubmit} className="space-y-5 flex flex-col gap-4">
+						{error && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
 						<div>
 							<label htmlFor="email" className="mb-2 block text-sm font-medium text-dark" >Email</label>
-							<input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30" />
+							<input id="email" name="email" type="email" autoComplete="email" maxLength={254} required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30" />
 						</div>
 						<div>
 							<div className="mb-2 flex items-center justify-between">
@@ -29,7 +60,7 @@ export default function LoginPage() {
 								<a href="#" className="text-sm font-medium text-green transition-colors hover:text-forest" >Forgot password?</a>
 							</div>
 							<div className="relative">
-								<input id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="current-password" placeholder="Enter your password" className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 pr-12 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30" />
+								<input id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="current-password" maxLength={128} required value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 pr-12 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30" />
 								<button type="button" onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-0 top-0 flex h-full w-12 items-center justify-center text-forest/70 transition-colors hover:text-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green" >
 									{showPassword ? (
 										<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" stroke="currentColor" className="h-5 w-5" >
@@ -45,11 +76,11 @@ export default function LoginPage() {
 								</button>
 							</div>
 						</div>
-						<button type="submit" className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-semibold tracking-wide text-sand shadow-sm transition-all hover:bg-green hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 active:scale-[0.99]" >Sign in</button>
+						<button type="submit" disabled={isSubmitting} className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-semibold tracking-wide text-sand shadow-sm transition-all hover:bg-green hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 active:scale-[0.99] disabled:cursor-wait disabled:opacity-70" >{isSubmitting ? "Signing in..." : "Sign in"}</button>
 					</form>
 					<p className="mt-7 text-center text-sm text-forest/70">
-						Don't have an account?
-						<a href="#" className="font-semibold text-green transition-colors hover:text-forest" >Create one</a>
+						Don&apos;t have an account?
+						<a href="/register" className="font-semibold text-green transition-colors hover:text-forest" >Create one</a>
 					</p>
 				</div>
 			</div>

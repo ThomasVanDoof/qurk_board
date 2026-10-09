@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { validateRegistrationData } from "@/lib/auth/validateRegistrationData";
 import Link from "next/link";
 
 export default function RegisterPage() {
+  const router = useRouter();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,29 +17,42 @@ export default function RegisterPage() {
     password?: string;
     confirmPassword?: string;
     }>({});
+    const [formError, setFormError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-  const result = validateRegistrationData({
-    username,
-    email,
-    password,
-    confirmPassword,
-  });
+      const registrationData = { username, email, password, confirmPassword };
+      const result = validateRegistrationData(registrationData);
+      setErrors(result.errors);
+      setFormError("");
 
-  setErrors(result.errors);
+      if (!result.valid) return;
 
-  if (!result.valid) {
-    return;
-  }
+      setIsSubmitting(true);
+      try {
+        const response = await fetch("/api/auth/sign-up", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(registrationData),
+        });
+        const resultBody: { error?: string; errors?: typeof errors } = await response.json();
 
-  console.log("Registration data is valid:", {
-    username,
-    email,
-    password,
-  });
-};
+        if (!response.ok) {
+          if (resultBody.errors) setErrors(resultBody.errors);
+          setFormError(resultBody.error ?? "Account creation failed. Please try again.");
+          return;
+        }
+
+        router.replace("/");
+        router.refresh();
+      } catch {
+        setFormError("Could not reach the server. Check your connection and try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
   return (
 
@@ -103,7 +118,8 @@ export default function RegisterPage() {
             </div>
 
             {/* Form */}
-           <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {formError && <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{formError}</p>}
 
               {/* Username */}
               <div>
@@ -118,6 +134,9 @@ export default function RegisterPage() {
                   id="username"
                   name="username"
                   type="text"
+                  autoComplete="username"
+                  maxLength={40}
+                  required
                   placeholder="Enter your username"
                   className="w-full rounded-lg border-2 border-[#DAD7CD] bg-[#F8F8F5] px-4 py-3 text-sm text-[#344E41] outline-none transition placeholder:text-gray-400 focus:border-[#588157] focus:ring-2 focus:ring-[#A3B18A]"
                 value={username}
@@ -145,6 +164,9 @@ export default function RegisterPage() {
                 id="email"
                 name="email"
                 type="email"
+                autoComplete="email"
+                maxLength={254}
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
@@ -171,6 +193,9 @@ export default function RegisterPage() {
                   id="password"
                   name="password"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Create a password"
                   className="w-full rounded-lg border-2 border-[#DAD7CD] bg-[#F8F8F5] px-4 py-3 text-sm text-[#344E41] outline-none transition placeholder:text-gray-400 focus:border-[#588157] focus:ring-2 focus:ring-[#A3B18A]"
                   value={password}
@@ -196,6 +221,9 @@ export default function RegisterPage() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Confirm your password"
                   className="w-full rounded-lg border-2 border-[#DAD7CD] bg-[#F8F8F5] px-4 py-3 text-sm text-[#344E41] outline-none transition placeholder:text-gray-400 focus:border-[#588157] focus:ring-2 focus:ring-[#A3B18A]"
                   value={confirmPassword}
@@ -212,9 +240,10 @@ export default function RegisterPage() {
               <div className="pt-3">
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full rounded-lg bg-[#588157] px-4 py-3 font-semibold text-white transition hover:bg-[#3A5A40] focus:outline-none focus:ring-2 focus:ring-[#A3B18A] focus:ring-offset-2"
                 >
-                  Next
+                  {isSubmitting ? "Creating account..." : "Create account"}
                 </button>
               </div>
             </form>
