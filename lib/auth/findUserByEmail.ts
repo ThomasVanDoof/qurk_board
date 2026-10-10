@@ -6,9 +6,6 @@ export async function findUserByEmail(email: string) {
   const normalizedEmail = email.trim().toLowerCase();
 
   return await users.findOne({
-    $or: [
-      { emailNormalized: normalizedEmail },
-      { email: normalizedEmail },
-    ],
+    $or: [{ emailNormalized: normalizedEmail }, { email: normalizedEmail }],
   });
 }

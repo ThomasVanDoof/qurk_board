@@ -8,12 +8,20 @@ import { validateRegistrationData } from "@/lib/auth/validateRegistrationData";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 
+type RegistrationResponse = {
+  success?: boolean;
+  user?: { id: string; username: string; email: string };
+  errors?: { username?: string; email?: string; password?: string; confirmPassword?: string };
+  error?: string;
+};
+
 export default function RegisterPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const [errors, setErrors] = useState<{
     username?: string;
@@ -22,70 +30,65 @@ export default function RegisterPage() {
     confirmPassword?: string;
   }>({});
 
-const handleSubmit = async (
-  event: React.FormEvent<HTMLFormElement>
-) => {
-  event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setServerError("");
 
-  const result = validateRegistrationData({
-    username,
-    email,
-    password,
-    confirmPassword,
-  });
-
-  setErrors(result.errors);
-
-  if (!result.valid) {
-    return;
-  }
-
-  try {
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        confirmPassword,
-      }),
+    const result = validateRegistrationData({
+      username,
+      email,
+      password,
+      confirmPassword,
     });
 
-    const data = await response.json();
+    setErrors(result.errors);
 
-    if (!response.ok) {
-      setErrors(data.errors || {});
+    if (!result.valid) {
       return;
     }
 
-    router.replace("/");
-    router.refresh();
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword,
+        }),
+      });
 
-  } catch (error) {
-    console.error("Registration error:", error);
-  }
-};
+      const data = (await response.json()) as RegistrationResponse;
+
+      if (!response.ok) {
+        setErrors(data.errors ?? {});
+        setServerError(data.error ?? "Registration could not be completed.");
+        return;
+      }
+
+      router.replace("/board");
+      router.refresh();
+    } catch {
+      setServerError("Could not reach the server. Check your connection and try again.");
+    }
+  };
 
   return (
     <main className="min-h-full bg-[#DAD7CD] text-[#344E41]">
       <section className="flex min-h-[calc(100vh-76px)] items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
-
           {/* Register Card */}
           <div className="rounded-2xl bg-white p-8 shadow-lg sm:p-10">
-
             {/* Heading */}
             <div className="mb-8 text-center">
               <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#A3B18A] text-2xl font-bold text-[#344E41]">
                 Q
               </div>
 
-              <h1 className="text-3xl font-bold text-[#344E41]">
-                Create your account
-              </h1>
+              <h1 className="text-3xl font-bold text-[#344E41]">Create your account</h1>
 
               <p className="mt-2 text-sm text-[#588157]">
                 Start organizing your ideas with Qurk Board.
@@ -94,28 +97,29 @@ const handleSubmit = async (
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
+              {serverError && (
+                <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {serverError}
+                </p>
+              )}
 
               {/* Username */}
               <div>
-             <Input
-  label="Create username"
-  name="username"
-  type="text"
-  placeholder="Enter your username"
-  value={username}
-  onChange={(event) => setUsername(event.target.value)}
-/>
+                <Input
+                  label="Create username"
+                  name="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                />
 
                 {/* 
                   We keep the actual input controlled here.
                   If your Input component supports value/onChange,
                   we can move these props into Input later.
                 */}
-                {errors.username && (
-                  <p className="mt-1 text-sm text-red-600">
-                    {errors.username}
-                  </p>
-                )}
+                {errors.username && <p className="mt-1 text-sm text-red-600">{errors.username}</p>}
               </div>
 
               {/* Email */}
@@ -129,11 +133,7 @@ const handleSubmit = async (
                   onChange={(event) => setEmail(event.target.value)}
                 />
 
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">
-                    {errors.email}
-                  </p>
-                )}
+                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
               </div>
 
               {/* Password */}
@@ -150,11 +150,7 @@ const handleSubmit = async (
                   onChange={(event) => setPassword(event.target.value)}
                 />
 
-                {errors.password && (
-                  <p className="mt-1 text-sm text-red-600">
-                    {errors.password}
-                  </p>
-                )}
+                {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
               </div>
 
               {/* Confirm password */}
@@ -172,17 +168,13 @@ const handleSubmit = async (
                 />
 
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">
-                    {errors.confirmPassword}
-                  </p>
+                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
               </div>
 
               {/* Submit */}
               <div className="pt-3">
-                <Button type="submit">
-                  Next
-                </Button>
+                <Button type="submit">Next</Button>
               </div>
             </form>
 
@@ -197,7 +189,6 @@ const handleSubmit = async (
               </Link>
             </p>
           </div>
-
         </div>
       </section>
     </main>
