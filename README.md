@@ -4,7 +4,7 @@
 
 Qurk Board helps people organize ideas and follow-ups that are otherwise scattered across notes and conversations. It gives individuals and small teams a visual workspace for capturing short notes, arranging them, connecting related thoughts, and keeping separate projects in one place without the overhead of a larger project-management tool.
 
-The main flow is to create an account, add notes to a personal board, move or connect notes as the plan takes shape, and manage projects alongside that board. Board note text and projects are saved to the signed-in user's MongoDB account; board positions, pins, and connections remain browser-local. A profile view lets the user update their display name.
+The main flow is to create an account, add notes to a personal board, or create a project and open its dedicated board. Each project's notes are saved separately, so returning to a project restores that project's board rather than mixing notes between projects. Board note text and projects are saved to the signed-in user's MongoDB account; board positions, pins, and connections remain browser-local. A profile view lets the user update their display name.
 
 ## Product Demo
 
@@ -48,12 +48,12 @@ All project and item routes require an active session. The session is stored in 
 | `GET`, `POST`            | `/api/projects`      | List or create owned projects             |
 | `GET`, `PATCH`, `DELETE` | `/api/projects/{id}` | Read, update, or delete one owned project |
 
-Item payloads use `title` and `details`; project payloads use `name` and `description`. List routes return `{ "items": [...] }` and `{ "projects": [...] }`. Create and update routes return the created or updated record under `item` or `project`.
+Item payloads use `title` and `details`; optionally include `projectId` to create the note on that project's board. Omitting `projectId` creates a personal-board note. Project payloads use `name` and `description`. List routes return `{ "items": [...] }` and `{ "projects": [...] }`. Create and update routes return the created or updated record under `item` or `project`.
 
 ## Known Issues and Opportunities
 
 - Existing notes saved before database sync remain in that browser's local storage; new database-backed notes are not automatically migrated from other devices.
 - Note pin state, board positions, and note connections are browser-local and do not sync across devices.
-- Projects are not yet linked to individual board notes.
+- Board positions, pins, and connections are stored per board in the current browser and do not sync across devices.
 - The live deployment returned a temporary sign-in error during verification. Check Vercel's MongoDB environment variables and the database network allowlist if authentication fails.
 - Run a mobile Lighthouse audit and color-contrast check before release; no Lighthouse report is currently included.

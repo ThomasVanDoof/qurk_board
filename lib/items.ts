@@ -8,6 +8,7 @@ const maxDetailsLength = 2000;
 type ItemRecord = {
   _id: ObjectId;
   ownerId: ObjectId;
+  projectId?: ObjectId | null;
   title: string;
   details: string;
   createdAt: Date;
@@ -16,6 +17,7 @@ type ItemRecord = {
 
 export type PublicItem = {
   id: string;
+  projectId: string | null;
   title: string;
   details: string;
   createdAt: string;
@@ -23,11 +25,18 @@ export type PublicItem = {
 };
 
 export type ItemInput = { title?: string; details?: string };
-export type ItemInputErrors = { title?: string; details?: string; form?: string };
+export type CreateItemInput = Required<ItemInput> & { projectId: string | null };
+export type ItemInputErrors = {
+  title?: string;
+  details?: string;
+  projectId?: string;
+  form?: string;
+};
 
 function toPublicItem(item: ItemRecord): PublicItem {
   return {
     id: item._id.toHexString(),
+    projectId: item.projectId?.toHexString() ?? null,
     title: item.title,
     details: item.details,
     createdAt: item.createdAt.toISOString(),
@@ -40,16 +49,18 @@ function isObject(value: unknown): value is Record<string, unknown> {
 }
 
 export function parseNewItem(value: unknown): {
-  data?: Required<ItemInput>;
+  data?: CreateItemInput;
   errors?: ItemInputErrors;
 } {
   if (!isObject(value)) return { errors: { form: "Item data must be an object." } };
   const errors: ItemInputErrors = {};
-  if (Object.keys(value).some((key) => key !== "title" && key !== "details")) {
-    errors.form = "Only title and details are accepted.";
+  if (Object.keys(value).some((key) => !["title", "details", "projectId"].includes(key))) {
+    errors.form = "Only title, details, and projectId are accepted.";
   }
   const title = typeof value.title === "string" ? value.title.trim() : "";
   const details = value.details === undefined ? "" : value.details;
+  const projectId =
+    value.projectId === undefined || value.projectId === null ? null : value.projectId;
 
   if (!title) errors.title = "Title is required.";
   else if (title.length > maxTitleLength)
@@ -57,9 +68,12 @@ export function parseNewItem(value: unknown): {
   if (typeof details !== "string") errors.details = "Details must be text.";
   else if (details.length > maxDetailsLength)
     errors.details = `Details must be ${maxDetailsLength} characters or fewer.`;
+  if (projectId !== null && (typeof projectId !== "string" || !/^[a-f\d]{24}$/i.test(projectId))) {
+    errors.projectId = "Project ID is invalid.";
+  }
 
   if (Object.keys(errors).length > 0) return { errors };
-  return { data: { title, details: details as string } };
+  return { data: { title, details: details as string, projectId: projectId as string | null } };
 }
 
 export function parseItemPatch(value: unknown): { data?: ItemInput; errors?: ItemInputErrors } {
@@ -91,22 +105,24 @@ export function parseItemPatch(value: unknown): { data?: ItemInput; errors?: Ite
   return { data };
 }
 
-export async function listItems(ownerId: string) {
+export async function listItems(ownerId: string, projectId: string | null = null) {
+  const projectFilter = projectId ? new ObjectId(projectId) : null;
   const items = await (
     await getDatabase()
   )
     .collection<ItemRecord>("items")
-    .find({ ownerId: new ObjectId(ownerId) })
+    .find({ ownerId: new ObjectId(ownerId), projectId: projectFilter })
     .sort({ createdAt: -1, _id: -1 })
     .toArray();
   return items.map(toPublicItem);
 }
 
-export async function createItem(ownerId: string, data: Required<ItemInput>) {
+export async function createItem(ownerId: string, data: CreateItemInput) {
   const now = new Date();
   const item: ItemRecord = {
     _id: new ObjectId(),
     ownerId: new ObjectId(ownerId),
+    projectId: data.projectId ? new ObjectId(data.projectId) : null,
     title: data.title,
     details: data.details,
     createdAt: now,

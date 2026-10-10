@@ -15,13 +15,25 @@ type BoardNote = {
 type NotePosition = { x: number; y: number };
 type BoardConnection = { id: string; from: string; to: string };
 type NoteSize = { width: number; height: number };
-type ApiItem = { id: string; title: string; details: string; createdAt: string; updatedAt: string };
+type ApiItem = {
+  id: string;
+  projectId: string | null;
+  title: string;
+  details: string;
+  createdAt: string;
+  updatedAt: string;
+};
 type ItemsResponse = { items: ApiItem[] };
 type ItemResponse = { item: ApiItem };
+type ProjectResponse = { project: { id: string; name: string } };
 
 const storageKey = "qurk-board-notes";
 const connectionStorageKey = "qurk-board-connections";
 const maxNoteLength = 500;
+
+function boardStorageKey(key: string, projectId: string | null) {
+  return projectId ? `${key}:${projectId}` : key;
+}
 
 function splitNoteText(text: string) {
   return { title: text.slice(0, 120), details: text.slice(120) };
@@ -39,14 +51,18 @@ async function readApiResponse<T>(response: Response): Promise<T> {
   return body as T;
 }
 
-function noteFromItem(item: ApiItem, cachedNote?: BoardNote): BoardNote {
+function noteFromItem(
+  item: ApiItem,
+  cachedNote?: BoardNote,
+  fallbackPosition: NotePosition = { x: 16, y: 20 },
+): BoardNote {
   return {
     id: item.id,
     text: item.title + item.details,
     pinned: cachedNote?.pinned ?? false,
     updatedAt: Date.parse(item.updatedAt) || Date.now(),
-    x: cachedNote?.x ?? 16,
-    y: cachedNote?.y ?? 20,
+    x: cachedNote?.x ?? fallbackPosition.x,
+    y: cachedNote?.y ?? fallbackPosition.y,
     persisted: true,
   };
 }
@@ -112,6 +128,12 @@ function connectorPath(source: NotePosition & NoteSize, target: NotePosition & N
 export default function BoardPage() {
   const [notes, setNotes] = useState<BoardNote[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [projectId] = useState<string | null>(() =>
+    typeof window === "undefined"
+      ? null
+      : new URLSearchParams(window.location.search).get("projectId"),
+  );
+  const [projectName, setProjectName] = useState<string | null>(null);
   const [boardError, setBoardError] = useState<string | null>(null);
   const [isComposing, setIsComposing] = useState(false);
   const [draft, setDraft] = useState("");
@@ -160,9 +182,11 @@ export default function BoardPage() {
   }, []);
 
   useEffect(() => {
+    const notesKey = boardStorageKey(storageKey, projectId);
+    const connectionsKey = boardStorageKey(connectionStorageKey, projectId);
     queueMicrotask(() => {
       try {
-        const savedNotes = window.localStorage.getItem(storageKey);
+        const savedNotes = window.localStorage.getItem(notesKey);
         if (savedNotes) {
           const parsed: unknown = JSON.parse(savedNotes);
           if (Array.isArray(parsed)) {
@@ -186,11 +210,11 @@ export default function BoardPage() {
           }
         }
       } catch {
-        window.localStorage.removeItem(storageKey);
+        window.localStorage.removeItem(notesKey);
       }
 
       try {
-        const savedConnections = window.localStorage.getItem(connectionStorageKey);
+        const savedConnections = window.localStorage.getItem(connectionsKey);
         if (savedConnections) {
           const parsed: unknown = JSON.parse(savedConnections);
           if (Array.isArray(parsed)) {
@@ -205,12 +229,12 @@ export default function BoardPage() {
           }
         }
       } catch {
-        window.localStorage.removeItem(connectionStorageKey);
+        window.localStorage.removeItem(connectionsKey);
       } finally {
         setLoaded(true);
       }
     });
-  }, []);
+  }, [projectId]);
 
   useEffect(() => {
     if (!loaded) return;
@@ -218,13 +242,21 @@ export default function BoardPage() {
 
     async function loadDatabaseNotes() {
       try {
-        const response = await fetch("/api/items", { cache: "no-store" });
+        if (projectId) {
+          const projectResponse = await fetch(`/api/projects/${projectId}`, { cache: "no-store" });
+          const data = await readApiResponse<ProjectResponse>(projectResponse);
+          if (active) setProjectName(data.project.name);
+        }
+        const itemUrl = projectId
+          ? `/api/items?projectId=${encodeURIComponent(projectId)}`
+          : "/api/items";
+        const response = await fetch(itemUrl, { cache: "no-store" });
         const data = await readApiResponse<ItemsResponse>(response);
         if (!active) return;
         setNotes((current) => {
           const cachedById = new Map(current.map((note) => [note.id, note]));
-          const databaseNotes = data.items.map((item) =>
-            noteFromItem(item, cachedById.get(item.id)),
+          const databaseNotes = data.items.map((item, index) =>
+            noteFromItem(item, cachedById.get(item.id), nextNotePosition(index, canvasWidth)),
           );
           const databaseIds = new Set(databaseNotes.map((note) => note.id));
           return [...databaseNotes, ...current.filter((note) => !databaseIds.has(note.id))];
@@ -240,21 +272,24 @@ export default function BoardPage() {
     return () => {
       active = false;
     };
-  }, [loaded]);
+  }, [canvasWidth, loaded, projectId]);
 
   useEffect(() => {
     if (!loaded || activeDragId) return;
     try {
-      window.localStorage.setItem(storageKey, JSON.stringify(notes));
+      window.localStorage.setItem(boardStorageKey(storageKey, projectId), JSON.stringify(notes));
     } catch {}
-  }, [activeDragId, loaded, notes]);
+  }, [activeDragId, loaded, notes, projectId]);
 
   useEffect(() => {
     if (!loaded) return;
     try {
-      window.localStorage.setItem(connectionStorageKey, JSON.stringify(connections));
+      window.localStorage.setItem(
+        boardStorageKey(connectionStorageKey, projectId),
+        JSON.stringify(connections),
+      );
     } catch {}
-  }, [connections, loaded]);
+  }, [connections, loaded, projectId]);
 
   function openComposer() {
     const position = nextNotePosition(notes.length, canvasWidth);
@@ -277,7 +312,7 @@ export default function BoardPage() {
       const response = await fetch("/api/items", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(splitNoteText(text)),
+        body: JSON.stringify({ ...splitNoteText(text), projectId: projectId ?? null }),
       });
       const { item } = await readApiResponse<ItemResponse>(response);
       setNotes((current) => [
@@ -462,7 +497,10 @@ export default function BoardPage() {
       );
       setNotes(updatedNotes);
       try {
-        window.localStorage.setItem(storageKey, JSON.stringify(updatedNotes));
+        window.localStorage.setItem(
+          boardStorageKey(storageKey, projectId),
+          JSON.stringify(updatedNotes),
+        );
       } catch {}
     }
     dragRef.current = null;
@@ -512,11 +550,21 @@ export default function BoardPage() {
   return (
     <main className="board-shell">
       <aside className="board-sidebar" aria-label="Board tools">
-        <a className="board-brand" href="/board" aria-label="Board name">
-          <span className="brand-placeholder">Board name</span>
+        <a
+          className="board-brand"
+          href={loaded && projectId ? "/projects" : "/board"}
+          aria-label="Board navigation"
+        >
+          <span className="brand-placeholder">
+            {loaded
+              ? (projectName ?? (projectId ? "Project board" : "Personal board"))
+              : "Loading board"}
+          </span>
         </a>
         <div className="sidebar-workspace">
-          <p className="sidebar-label">PERSONAL SPACE</p>
+          <p className="sidebar-label">
+            {!loaded ? "LOADING BOARD" : projectId ? "PROJECT BOARD" : "PERSONAL SPACE"}
+          </p>
           <p className="board-count">
             {notes.length} {notes.length === 1 ? "note" : "notes"} on your board
           </p>

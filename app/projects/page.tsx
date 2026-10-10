@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 type Project = {
   id: string;
@@ -26,6 +27,7 @@ async function readResponse<T>(response: Response): Promise<T> {
 }
 
 export default function Projects() {
+  const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,6 +72,7 @@ export default function Projects() {
       setProjects((current) => [data.project, ...current]);
       setName("");
       setDescription("");
+      router.push(`/board?projectId=${encodeURIComponent(data.project.id)}`);
     } catch (saveError) {
       setError(saveError instanceof Error ? saveError.message : "Unable to create project.");
     } finally {
@@ -226,6 +229,12 @@ export default function Projects() {
                       Updated {new Date(project.updatedAt).toLocaleDateString()}
                     </p>
                     <div className="mt-4 flex items-center gap-4 border-t border-[#DAD7CD] pt-3 text-sm font-medium">
+                      <a
+                        href={`/board?projectId=${encodeURIComponent(project.id)}`}
+                        className="text-[#588157] underline"
+                      >
+                        Open board
+                      </a>
                       <button
                         type="button"
                         onClick={() => {
