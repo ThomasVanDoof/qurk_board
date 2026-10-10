@@ -10,7 +10,6 @@ export default function LoginPage() {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setError("");
@@ -79,8 +78,8 @@ export default function LoginPage() {
 						<button type="submit" disabled={isSubmitting} className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-semibold tracking-wide text-sand shadow-sm transition-all hover:bg-green hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 active:scale-[0.99] disabled:cursor-wait disabled:opacity-70" >{isSubmitting ? "Signing in..." : "Sign in"}</button>
 					</form>
 					<p>
-  						Don't have an account?{" "}
-  						<Link href="/register">Create one</Link>
+						Don&apos;t have an account?{" "}
+						<Link href="/register">Create one</Link>
 					</p>
 				</div>
 			</div>
