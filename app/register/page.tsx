@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { validateRegistrationData } from "@/lib/auth/validateRegistrationData";
@@ -8,6 +9,7 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,7 +61,8 @@ const handleSubmit = async (
       return;
     }
 
-    console.log("User created successfully:", data);
+    router.replace("/");
+    router.refresh();
 
   } catch (error) {
     console.error("Registration error:", error);
@@ -139,6 +142,9 @@ const handleSubmit = async (
                   label="Create password"
                   name="password"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Create a password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
@@ -157,6 +163,9 @@ const handleSubmit = async (
                   label="Confirm password"
                   name="confirmPassword"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
