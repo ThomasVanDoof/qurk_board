@@ -1,8 +1,14 @@
-import client from "@/lib/mongodb";
+import { getDatabase } from "@/lib/db";
 
 export async function findUserByEmail(email: string) {
-  const database = client.db("qurkboard");
+  const database = await getDatabase();
   const users = database.collection("users");
+  const normalizedEmail = email.trim().toLowerCase();
 
-  return await users.findOne({ email: email.trim().toLowerCase() });
+  return await users.findOne({
+    $or: [
+      { emailNormalized: normalizedEmail },
+      { email: normalizedEmail },
+    ],
+  });
 }
