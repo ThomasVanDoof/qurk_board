@@ -1,4 +1,4 @@
-import client from "@/lib/mongodb";
+import { getDatabase } from "@/lib/db";
 
 export interface NewUser {
   username: string;
@@ -7,7 +7,7 @@ export interface NewUser {
 }
 
 export async function createUser(user: NewUser) {
-  const database = client.db("qurkboard");
+  const database = await getDatabase();
   const users = database.collection("users");
 
   const normalizedUsername = user.username.trim().toLowerCase();
@@ -18,7 +18,7 @@ export async function createUser(user: NewUser) {
     usernameNormalized: normalizedUsername,
     email: normalizedEmail,
     emailNormalized: normalizedEmail,
-    password: user.password,
+    passwordHash: user.password,
     createdAt: new Date(),
   });
 
