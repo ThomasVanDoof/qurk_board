@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { validateRegistrationData } from "@/lib/auth/validateRegistrationData";
@@ -13,6 +14,9 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState("");
+
   const [errors, setErrors] = useState<{
     username?: string;
     email?: string;
@@ -24,6 +28,8 @@ const handleSubmit = async (
   event: React.FormEvent<HTMLFormElement>
 ) => {
   event.preventDefault();
+
+  setSuccessMessage("");
 
   const result = validateRegistrationData({
     username,
@@ -59,7 +65,11 @@ const handleSubmit = async (
       return;
     }
 
-    console.log("User created successfully:", data);
+  setSuccessMessage("Account created successfully! Redirecting to login...");
+
+  setTimeout(() => {
+  router.push("/login");
+}, 2000);
 
   } catch (error) {
     console.error("Registration error:", error);
@@ -103,11 +113,6 @@ const handleSubmit = async (
   onChange={(event) => setUsername(event.target.value)}
 />
 
-                {/* 
-                  We keep the actual input controlled here.
-                  If your Input component supports value/onChange,
-                  we can move these props into Input later.
-                */}
                 {errors.username && (
                   <p className="mt-1 text-sm text-red-600">
                     {errors.username}
@@ -139,6 +144,9 @@ const handleSubmit = async (
                   label="Create password"
                   name="password"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Create a password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
@@ -157,6 +165,9 @@ const handleSubmit = async (
                   label="Confirm password"
                   name="confirmPassword"
                   type="password"
+                  autoComplete="new-password"
+                  maxLength={128}
+                  required
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
@@ -168,6 +179,11 @@ const handleSubmit = async (
                   </p>
                 )}
               </div>
+              
+                {successMessage && (
+                <p  role="status"className="rounded-lg bg-[#DDE8D5] p-3 text-center text-sm font-medium text-[#344E41]">
+             {successMessage} </p>
+              )}
 
               {/* Submit */}
               <div className="pt-3">
