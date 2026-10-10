@@ -23,7 +23,6 @@ export default function RegisterPage() {
   const [serverError, setServerError] = useState("");
 
   const router = useRouter();
-  const [successMessage, setSuccessMessage] = useState("");
 
   const [errors, setErrors] = useState<{
     username?: string;
@@ -173,12 +172,6 @@ export default function RegisterPage() {
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
               </div>
-              
-                {successMessage && (
-                <p  role="status"className="rounded-lg bg-[#DDE8D5] p-3 text-center text-sm font-medium text-[#344E41]">
-             {successMessage} </p>
-              )}
-
               {/* Submit */}
               <div className="pt-3">
                 <Button type="submit">Next</Button>

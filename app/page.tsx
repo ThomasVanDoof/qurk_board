@@ -36,44 +36,44 @@ export default function Home() {
         </div>
       </section>
 
-        {/* Feature Cards */}
-        <div className="mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
-          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#A3B18A] font-bold text-[#344E41]">
-              1
-            </div>
-
-            <h2 className="text-xl font-bold text-[#344E41]">Write</h2>
-
-            <p className="mt-2 leading-6 text-[#3A5A40]">
-              Add notes for your ideas, tasks, plans, and next steps.
-            </p>
+      {/* Feature Cards */}
+      <div className="mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#A3B18A] font-bold text-[#344E41]">
+            1
           </div>
 
-          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#588157] font-bold text-white">
-              2
-            </div>
+          <h2 className="text-xl font-bold text-[#344E41]">Write</h2>
 
-            <h2 className="text-xl font-bold text-[#344E41]">Move</h2>
-
-            <p className="mt-2 leading-6 text-[#3A5A40]">
-              Arrange your notes around the board so you can see your plan.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
-              3
-            </div>
-
-            <h2 className="text-xl font-bold text-[#344E41]">Connect</h2>
-
-            <p className="mt-2 leading-6 text-[#3A5A40]">
-              Connect your ideas with arrows or digital string to show how everything fits together.
-            </p>
-          </div>
+          <p className="mt-2 leading-6 text-[#3A5A40]">
+            Add notes for your ideas, tasks, plans, and next steps.
+          </p>
         </div>
-      </main>
+
+        <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#588157] font-bold text-white">
+            2
+          </div>
+
+          <h2 className="text-xl font-bold text-[#344E41]">Move</h2>
+
+          <p className="mt-2 leading-6 text-[#3A5A40]">
+            Arrange your notes around the board so you can see your plan.
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-[#A3B18A] bg-white p-6 text-left shadow-sm">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
+            3
+          </div>
+
+          <h2 className="text-xl font-bold text-[#344E41]">Connect</h2>
+
+          <p className="mt-2 leading-6 text-[#3A5A40]">
+            Connect your ideas with arrows or digital string to show how everything fits together.
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }

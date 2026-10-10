@@ -9,16 +9,13 @@ export async function GET() {
     if (!session?.user?.email) {
       return NextResponse.json(
         { error: "Debes iniciar sesión para ver tu perfil." },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const user = await findUserByEmail(session.user.email);
 
     if (!user) {
-      return NextResponse.json(
-        { error: "No se encontró el usuario." },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "No se encontró el usuario." }, { status: 404 });
     }
     return NextResponse.json({
       _id: user._id.toString(),
@@ -29,9 +26,6 @@ export async function GET() {
   } catch (error) {
     console.error("Error al obtener el perfil:", error);
 
-    return NextResponse.json(
-      { error: "No se pudo cargar el perfil." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "No se pudo cargar el perfil." }, { status: 500 });
   }
 }
