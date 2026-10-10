@@ -34,6 +34,7 @@ export default function Home() {
             </a>{" "}
           </div>
         </div>
+      </section>
 
         {/* Feature Cards */}
         <div className="mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
@@ -73,7 +74,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
-    </main>
+      </main>
   );
 }
