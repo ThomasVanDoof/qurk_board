@@ -65,25 +65,6 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-sand px-4 py-6 text-dark sm:px-8 sm:py-8">
       <div className="mx-auto max-w-6xl">
-        {/* Top navigation */}
-        <header className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-dark/10 bg-white/80 p-5 shadow-sm backdrop-blur-sm">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-forest text-sand">
-              <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" aria-hidden="true" >
-                <path d="M4 5h16v14H4zM8 9h8M8 13h5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div>
-              <span className="block text-lg font-semibold">Qurk Board</span>
-              <span className="text-xs text-forest/70">Your workspace</span>
-            </div>
-          </Link>
-          <nav className="flex flex-wrap items-center gap-4 text-sm font-medium text-forest">
-            <Link href="/" className="transition hover:text-green">Home</Link>
-            <Link href="/projects" className="transition hover:text-green" > Projects </Link>
-            <Link href="/profile" aria-current="page" className="font-semibold text-green" > My Profile </Link>
-          </nav>
-        </header>
         {/* Page layout */}
         <div className="grid gap-6 md:grid-cols-[240px_minmax(0,1fr)]">
           {/* Sidebar */}
