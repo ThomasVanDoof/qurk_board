@@ -157,7 +157,7 @@ export default function Projects() {
           <button
             type="submit"
             disabled={isSaving}
-            className="rounded bg-[#588157] px-5 py-2 font-medium text-white hover:bg-[#3A5A40] disabled:opacity-60"
+            className="rounded bg-[#527a51] px-5 py-2 font-medium text-white hover:bg-[#3A5A40] disabled:opacity-60"
           >
             {isSaving ? "Saving..." : "Create project"}
           </button>
@@ -206,7 +206,7 @@ export default function Projects() {
                       <button
                         type="submit"
                         disabled={isSaving}
-                        className="rounded bg-[#588157] px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+                        className="rounded bg-[#527a51] px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
                       >
                         Save
                       </button>
@@ -231,7 +231,7 @@ export default function Projects() {
                     <div className="mt-4 flex items-center gap-4 border-t border-[#DAD7CD] pt-3 text-sm font-medium">
                       <a
                         href={`/board?projectId=${encodeURIComponent(project.id)}`}
-                        className="text-[#588157] underline"
+                        className="text-[#527a51] underline"
                       >
                         Open board
                       </a>
