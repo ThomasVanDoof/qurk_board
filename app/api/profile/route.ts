@@ -1,6 +1,8 @@
+
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { findUserByEmail } from "@/lib/auth/findUserByEmail";
+import { getDatabase } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -12,11 +14,13 @@ export async function GET() {
         { status: 401 },
       );
     }
+
     const user = await findUserByEmail(session.user.email);
 
     if (!user) {
       return NextResponse.json({ error: "No se encontró el usuario." }, { status: 404 });
     }
+
     return NextResponse.json({
       _id: user._id.toString(),
       username: user.username,
