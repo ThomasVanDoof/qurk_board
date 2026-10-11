@@ -87,7 +87,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30"
+                className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 text-dark outline-none transition placeholder:text-forest focus:border-forest focus:ring-2 focus:ring-green/30"
               />
             </div>
             <div>
@@ -113,13 +113,13 @@ export default function LoginPage() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
-                  className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 pr-12 text-dark outline-none transition placeholder:text-forest/50 focus:border-forest focus:ring-2 focus:ring-green/30"
+                  className="w-full rounded-lg border border-sage bg-sand/40 px-4 py-3 pr-12 text-dark outline-none transition placeholder:text-forest focus:border-forest focus:ring-2 focus:ring-green/30"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((current) => !current)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-0 top-0 flex h-full w-12 items-center justify-center text-forest/70 transition-colors hover:text-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green"
+                  className="absolute right-0 top-0 flex h-full w-12 items-center justify-center text-forest transition-colors hover:text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green"
                 >
                   {showPassword ? (
                     <svg

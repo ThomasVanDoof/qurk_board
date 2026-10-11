@@ -17,7 +17,7 @@ export default function Input({ label, id, className, ...props }: InputProps) {
         {...props}
         className={
           className ??
-          "rounded-md border border-[#A3B18A] bg-white px-3 py-2 text-sm outline-none transition focus:border-[#527a51] focus:ring-1 focus:ring-[#527a51]"
+          "rounded-md border border-[#657A5B] bg-white px-3 py-2 text-sm outline-none transition focus:border-[#3A5A40] focus:ring-1 focus:ring-[#3A5A40]"
         }
       />
     </div>
