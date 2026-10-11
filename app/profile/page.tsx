@@ -90,7 +90,7 @@ export default function ProfilePage() {
               onSubmit={(event) => {
                 void saveProfile(event);
               }}
-              className="mt-8 grid gap-5 rounded-lg border border-[#A3B18A] bg-white p-6"
+              className="mt-8 grid gap-5 rounded-lg border border-[#657A5B] bg-white p-6"
             >
               <p className="grid gap-1 text-sm">
                 <span className="font-medium">Email</span>

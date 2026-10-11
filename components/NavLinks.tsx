@@ -41,21 +41,21 @@ export default function NavLinks() {
 
   return (
     <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm font-medium sm:gap-x-6">
-      <Link href="/" className="transition hover:text-[#A3B18A]">
+      <Link href="/" className="transition hover:text-[#E7BC70]">
         Home
       </Link>
 
-      <Link href="/board" className="transition hover:text-[#A3B18A]">
+      <Link href="/board" className="transition hover:text-[#E7BC70]">
         Board
       </Link>
 
-      <Link href="/projects" className="transition hover:text-[#A3B18A]">
+      <Link href="/projects" className="transition hover:text-[#E7BC70]">
         Projects
       </Link>
 
       {isAuthenticated ? (
         <>
-          <Link href="/profile" className="transition hover:text-[#A3B18A]">
+          <Link href="/profile" className="transition hover:text-[#E7BC70]">
             Profile
           </Link>
           <button
@@ -63,13 +63,13 @@ export default function NavLinks() {
             onClick={() => {
               void signOut();
             }}
-            className="transition hover:text-[#A3B18A]"
+            className="transition hover:text-[#E7BC70]"
           >
             Sign out
           </button>
         </>
       ) : (
-        <Link href="/login" className="transition hover:text-[#A3B18A]">
+        <Link href="/login" className="transition hover:text-[#E7BC70]">
           Login
         </Link>
       )}

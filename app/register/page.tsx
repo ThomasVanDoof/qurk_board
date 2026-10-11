@@ -85,13 +85,13 @@ export default function RegisterPage() {
           <div className="rounded-2xl bg-white p-8 shadow-lg sm:p-10">
             {/* Heading */}
             <div className="mb-8 text-center">
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#A3B18A] text-2xl font-bold text-[#344E41]">
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#A3B18A] text-2xl font-bold text-[#1F3329]">
                 Q
               </div>
 
               <h1 className="text-3xl font-bold text-[#344E41]">Create your account</h1>
 
-              <p className="mt-2 text-sm text-[#527a51]">
+              <p className="mt-2 text-sm text-[#3A5A40]">
                 Start organizing your ideas with Qurk Board.
               </p>
             </div>
@@ -179,7 +179,7 @@ export default function RegisterPage() {
             </form>
 
             {/* Login */}
-            <p className="mt-7 text-center text-sm text-[#527a51]">
+            <p className="mt-7 text-center text-sm text-[#3A5A40]">
               Already have an account?{" "}
               <Link
                 href="/login"

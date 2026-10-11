@@ -133,7 +133,7 @@ export default function Projects() {
 
         <form
           onSubmit={createProject}
-          className="mb-8 grid gap-4 rounded-lg border border-[#A3B18A] bg-white p-5 sm:grid-cols-[1fr_2fr_auto] sm:items-end"
+          className="mb-8 grid gap-4 rounded-lg border border-[#657A5B] bg-white p-5 sm:grid-cols-[1fr_2fr_auto] sm:items-end"
         >
           <label className="grid gap-1 text-sm font-medium">
             Project name
@@ -142,7 +142,7 @@ export default function Projects() {
               maxLength={100}
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className="rounded border border-[#A3B18A] px-3 py-2"
+              className="rounded border border-[#657A5B] px-3 py-2"
             />
           </label>
           <label className="grid gap-1 text-sm font-medium">
@@ -151,13 +151,13 @@ export default function Projects() {
               maxLength={1000}
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              className="rounded border border-[#A3B18A] px-3 py-2"
+              className="rounded border border-[#657A5B] px-3 py-2"
             />
           </label>
           <button
             type="submit"
             disabled={isSaving}
-            className="rounded bg-[#527a51] px-5 py-2 font-medium text-white hover:bg-[#3A5A40] disabled:opacity-60"
+            className="rounded bg-[#3A5A40] px-5 py-2 font-medium text-white hover:bg-[#263F33] disabled:opacity-60"
           >
             {isSaving ? "Saving..." : "Create project"}
           </button>
@@ -166,7 +166,7 @@ export default function Projects() {
         {isLoading ? (
           <p role="status">Loading projects...</p>
         ) : projects.length === 0 ? (
-          <p className="border-t border-[#A3B18A] py-8 text-[#3A5A40]">
+          <p className="border-t border-[#657A5B] py-8 text-[#3A5A40]">
             No projects yet. Create one to get started.
           </p>
         ) : (
@@ -174,7 +174,7 @@ export default function Projects() {
             {projects.map((project) => (
               <article
                 key={project.id}
-                className="rounded-lg border border-[#A3B18A] bg-white p-5 shadow-sm"
+                className="rounded-lg border border-[#657A5B] bg-white p-5 shadow-sm"
               >
                 {editingId === project.id ? (
                   <form
@@ -190,7 +190,7 @@ export default function Projects() {
                         maxLength={100}
                         value={editName}
                         onChange={(event) => setEditName(event.target.value)}
-                        className="rounded border border-[#A3B18A] px-3 py-2"
+                        className="rounded border border-[#657A5B] px-3 py-2"
                       />
                     </label>
                     <label className="grid gap-1 text-sm font-medium">
@@ -199,14 +199,14 @@ export default function Projects() {
                         maxLength={1000}
                         value={editDescription}
                         onChange={(event) => setEditDescription(event.target.value)}
-                        className="min-h-24 rounded border border-[#A3B18A] px-3 py-2"
+                        className="min-h-24 rounded border border-[#657A5B] px-3 py-2"
                       />
                     </label>
                     <div className="flex gap-3">
                       <button
                         type="submit"
                         disabled={isSaving}
-                        className="rounded bg-[#527a51] px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+                        className="rounded bg-[#3A5A40] px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
                       >
                         Save
                       </button>
@@ -231,7 +231,7 @@ export default function Projects() {
                     <div className="mt-4 flex items-center gap-4 border-t border-[#DAD7CD] pt-3 text-sm font-medium">
                       <a
                         href={`/board?projectId=${encodeURIComponent(project.id)}`}
-                        className="text-[#527a51] underline"
+                        className="text-[#3A5A40] underline"
                       >
                         Open board
                       </a>

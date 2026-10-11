@@ -13,8 +13,8 @@
   --font-sans: var(--font-oswald);
 
   --color-sand: #dad7cd;
-  --color-sage: #a3b18a;
-  --color-green: #527a51;
+  --color-sage: #657a5b;
+  --color-green: #3a5a40;
   --color-forest: #3a5a40;
   --color-dark: #344e41;
 
@@ -49,7 +49,7 @@ button {
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #2e7052;
+  outline: 2px solid #1f3329;
   outline-offset: 3px;
 }
 
@@ -342,7 +342,7 @@ textarea:focus-visible {
 }
 
 .paper-label {
-  color: rgb(44 56 43 / 60%);
+  color: #53594d;
   font-family: var(--font-oswald), sans-serif;
   font-size: 9px;
 }
@@ -358,7 +358,7 @@ textarea:focus-visible {
   display: grid;
   place-items: center;
   padding: 0 7px;
-  color: rgb(48 55 44 / 68%);
+  color: #53594d;
   background: transparent;
   border: 0;
   border-radius: 3px;
@@ -376,7 +376,7 @@ textarea:focus-visible {
 }
 
 .note-action-button.is-pinned {
-  color: #9c542e;
+  color: #7a3d21;
 }
 
 .connection-select-button {
@@ -438,18 +438,19 @@ textarea:focus-visible {
 }
 
 .note-composer textarea::placeholder {
-  color: rgb(52 59 49 / 50%);
+  color: #53594d;
 }
 
 .note-composer textarea:focus-visible,
 .note-edit-form textarea:focus-visible {
-  outline: 0;
+  outline: 2px solid #1f3329;
+  outline-offset: 2px;
 }
 
 .composer-footer {
   justify-content: space-between;
   gap: 12px;
-  color: #606353;
+  color: #53594d;
   font-size: 11px;
 }
 
@@ -548,7 +549,7 @@ textarea:focus-visible {
 }
 
 .empty-board .board-eyebrow {
-  color: #748061;
+  color: #59634b;
 }
 
 .empty-board h2 {
@@ -599,6 +600,10 @@ textarea:focus-visible {
   color: #f8f5e9;
   background: #263f33;
   border-right: 1px solid rgb(255 255 255 / 11%);
+}
+
+.board-sidebar :focus-visible {
+  outline-color: #e7bc70;
 }
 
 .board-sidebar .board-brand {
@@ -892,7 +897,7 @@ textarea:focus-visible {
 
 .move-label {
   min-width: 30px;
-  color: rgb(57 61 48 / 64%);
+  color: #53594d;
   font-family: var(--font-oswald), sans-serif;
   font-size: 9px;
   font-weight: 600;
@@ -926,7 +931,10 @@ textarea:focus-visible {
   top: 50%;
   left: 50%;
   width: min(300px, calc(100% - 32px));
+  padding: 16px 20px;
   color: #fff5df;
+  background: rgb(38 63 51 / 92%);
+  border-radius: 4px;
   text-align: center;
   pointer-events: none;
   transform: translate(-50%, -50%);
