@@ -57,7 +57,8 @@ textarea:focus-visible {
   min-height: 100vh;
   isolation: isolate;
   background-color: #b99067;
-  background-image: linear-gradient(180deg, rgb(44 42 32 / 24%), rgb(37 39 31 / 34%)), url("/cork_board.png");
+  background-image:
+    linear-gradient(180deg, rgb(44 42 32 / 24%), rgb(37 39 31 / 34%)), url("/cork_board.png");
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -122,7 +123,9 @@ textarea:focus-visible {
   border-radius: 5px;
   font-size: 14px;
   font-weight: 600;
-  transition: background-color 160ms ease, transform 160ms ease;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .create-button:hover {
@@ -268,8 +271,14 @@ textarea:focus-visible {
   min-width: 0;
   padding: 18px 19px 20px;
   color: #343b31;
-  box-shadow: 0 9px 18px rgb(44 34 23 / 19%), 0 2px 4px rgb(44 34 23 / 12%);
-  transition: min-height 260ms ease, border-radius 260ms ease, background-color 260ms ease, box-shadow 180ms ease;
+  box-shadow:
+    0 9px 18px rgb(44 34 23 / 19%),
+    0 2px 4px rgb(44 34 23 / 12%);
+  transition:
+    min-height 260ms ease,
+    border-radius 260ms ease,
+    background-color 260ms ease,
+    box-shadow 180ms ease;
 }
 
 .note-card {
@@ -278,7 +287,9 @@ textarea:focus-visible {
 }
 
 .note-card:hover {
-  box-shadow: 0 13px 25px rgb(44 34 23 / 24%), 0 3px 6px rgb(44 34 23 / 13%);
+  box-shadow:
+    0 13px 25px rgb(44 34 23 / 24%),
+    0 3px 6px rgb(44 34 23 / 13%);
 }
 
 .note--small {
@@ -354,7 +365,9 @@ textarea:focus-visible {
   font-family: var(--font-oswald), sans-serif;
   font-size: 11px;
   line-height: 1;
-  transition: color 140ms ease, background-color 140ms ease;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
 }
 
 .note-action-button:hover {
@@ -651,7 +664,9 @@ textarea:focus-visible {
   border: 0;
   border-radius: 4px;
   font-size: 13px;
-  transition: background-color 140ms ease, color 140ms ease;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
 }
 
 .sidebar-link:hover,
@@ -787,7 +802,8 @@ textarea:focus-visible {
   min-height: 100vh;
   overflow: hidden;
   background-color: #a87a52;
-  background-image: linear-gradient(135deg, rgb(43 38 29 / 9%), rgb(43 38 29 / 22%)), url("/cork_board.png");
+  background-image:
+    linear-gradient(135deg, rgb(43 38 29 / 9%), rgb(43 38 29 / 22%)), url("/cork_board.png");
   background-position: center;
   background-size: cover;
 }
@@ -823,16 +839,24 @@ textarea:focus-visible {
   min-width: 0;
   margin: 0;
   padding: 15px 17px 18px;
-  box-shadow: 0 11px 21px rgb(39 30 21 / 27%), 0 2px 4px rgb(39 30 21 / 17%);
+  box-shadow:
+    0 11px 21px rgb(39 30 21 / 27%),
+    0 2px 4px rgb(39 30 21 / 17%);
 }
 
 .note-card {
   animation: note-arrive 260ms ease both;
-  transition: box-shadow 150ms ease, min-height 240ms ease, border-radius 240ms ease, background-color 240ms ease;
+  transition:
+    box-shadow 150ms ease,
+    min-height 240ms ease,
+    border-radius 240ms ease,
+    background-color 240ms ease;
 }
 
 .note-card.is-dragging {
-  box-shadow: 0 20px 34px rgb(30 23 16 / 35%), 0 5px 10px rgb(30 23 16 / 23%);
+  box-shadow:
+    0 20px 34px rgb(30 23 16 / 35%),
+    0 5px 10px rgb(30 23 16 / 23%);
   transition: box-shadow 150ms ease;
 }
 
@@ -1019,8 +1043,13 @@ textarea:focus-visible {
 }
 
 @keyframes note-arrive {
-  from { opacity: 0; transform: translateY(8px) scale(0.985); }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 600px) {

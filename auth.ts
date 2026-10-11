@@ -45,10 +45,7 @@ if (!user || typeof user.passwordHash !== "string") {
   return null;
 }
 
-const passwordMatches = await bcrypt.compare(
-  password,
-  user.passwordHash
-);
+        const passwordMatches = await bcrypt.compare(password, user.password);
 
 if (!passwordMatches) {
   return null;

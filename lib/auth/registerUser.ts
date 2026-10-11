@@ -4,7 +4,6 @@ import { hashPassword } from "./hashPassword";
 import { createUser } from "./createUser";
 
 export async function registerUser(data: RegistrationData) {
-
   const validation = validateRegistrationData(data);
 
   if (!validation.valid) {
@@ -33,7 +32,6 @@ export async function registerUser(data: RegistrationData) {
     email: data.email,
     password: hashedPassword,
   });
-
 
   return {
     success: true,

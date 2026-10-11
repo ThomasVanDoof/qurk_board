@@ -15,9 +15,7 @@ export interface ValidationResult {
   };
 }
 
-export function validateRegistrationData(
-  data: RegistrationData
-): ValidationResult {
+export function validateRegistrationData(data: RegistrationData): ValidationResult {
   const errors: ValidationResult["errors"] = {};
 
   // Username
@@ -32,7 +30,10 @@ export function validateRegistrationData(
   // Email
   if (!data.email.trim()) {
     errors.email = "Email is required.";
-  } else if (data.email.trim().length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+  } else if (
+    data.email.trim().length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())
+  ) {
     errors.email = "Please enter a valid email address.";
   }
 

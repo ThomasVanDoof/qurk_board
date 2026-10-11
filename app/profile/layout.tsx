@@ -1,17 +1,10 @@
-
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import type { ReactNode } from "react";
+import { getCurrentUser } from "@/lib/auth/session";
 
-export default async function ProfileLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const session = await auth();
+export default async function ProfileLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
 
-  if (!session?.user) {
-    redirect("/login?callbackUrl=/profile");
-  }
-
-  return <>{children}</>;
+  return children;
 }

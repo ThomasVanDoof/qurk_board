@@ -103,7 +103,7 @@ As an authenticated user, I want to delete an item I no longer need so that my b
 - **FR-001**: The system MUST allow a person to register with a unique email and password.
 - **FR-002**: The system MUST validate required fields and reject malformed or over-limit input before persistence.
 - **FR-003**: The system MUST establish an authenticated session after successful registration and require authentication for item operations.
-- **FR-004**: Authenticated users MUST be able to create items with a required title and optional details.
+- **FR-004**: Authenticated users MUST be able to create items with a required title, optional details, and optional project association.
 - **FR-005**: Authenticated users MUST be able to list their own items and retrieve an individual item they own.
 - **FR-006**: Authenticated users MUST be able to update editable fields on items they own.
 - **FR-007**: Authenticated users MUST be able to delete items they own after an explicit confirmation in the user interface.
@@ -112,30 +112,41 @@ As an authenticated user, I want to delete an item I no longer need so that my b
 - **FR-010**: The interface MUST provide loading, empty, validation, not-found, unauthorized, and failure states for the core workflows.
 - **FR-011**: The system MUST preserve item ownership and creation metadata when an item is updated.
 - **FR-012**: The system MUST make the core workflows usable with keyboard navigation and responsive layouts.
+- **FR-013**: Each project MUST have a distinct board whose notes are isolated from other projects and the personal board.
 
 ### API Endpoints
 
 The following resource-oriented endpoints define the initial application contract. Authentication details are represented by the user’s authenticated session and are required where marked.
 
-| Method | Endpoint | Auth | Purpose | Success | Common errors |
-|--------|----------|------|---------|---------|---------------|
-| POST | `/api/auth/sign-up` | No | Register a user and start a session | `201 Created` | `400 Bad Request`, `409 Conflict` |
-| GET | `/api/items` | Yes | List the current user’s items | `200 OK` | `401 Unauthorized` |
-| POST | `/api/items` | Yes | Create an item | `201 Created` | `400 Bad Request`, `401 Unauthorized` |
-| GET | `/api/items/{id}` | Yes | Read one owned item | `200 OK` | `401 Unauthorized`, `404 Not Found` |
-| PATCH | `/api/items/{id}` | Yes | Update one owned item | `200 OK` | `400 Bad Request`, `401 Unauthorized`, `404 Not Found` |
-| DELETE | `/api/items/{id}` | Yes | Delete one owned item | `204 No Content` | `401 Unauthorized`, `404 Not Found` |
+| Method | Endpoint             | Auth | Purpose                                            | Success          | Common errors                                          |
+| ------ | -------------------- | ---- | -------------------------------------------------- | ---------------- | ------------------------------------------------------ |
+| POST   | `/api/auth/sign-up`  | No   | Register a user and start a session                | `201 Created`    | `400 Bad Request`                                      |
+| POST   | `/api/auth/login`    | No   | Authenticate and start a session                   | `200 OK`         | `400 Bad Request`, `401 Unauthorized`                  |
+| GET    | `/api/auth/session`  | Yes  | Read the current user                              | `200 OK`         | `401 Unauthorized`                                     |
+| DELETE | `/api/auth/session`  | No   | End the current session                            | `204 No Content` | `500 Internal Server Error`                            |
+| PATCH  | `/api/auth/profile`  | Yes  | Update the current user’s username                 | `200 OK`         | `400 Bad Request`, `401 Unauthorized`                  |
+| GET    | `/api/items`         | Yes  | List personal items or items scoped by `projectId` | `200 OK`         | `401 Unauthorized`, `404 Not Found`                    |
+| POST   | `/api/items`         | Yes  | Create a personal or project item                  | `201 Created`    | `400 Bad Request`, `401 Unauthorized`, `404 Not Found` |
+| GET    | `/api/items/{id}`    | Yes  | Read one owned item                                | `200 OK`         | `401 Unauthorized`, `404 Not Found`                    |
+| PATCH  | `/api/items/{id}`    | Yes  | Update one owned item                              | `200 OK`         | `400 Bad Request`, `401 Unauthorized`, `404 Not Found` |
+| DELETE | `/api/items/{id}`    | Yes  | Delete one owned item                              | `204 No Content` | `401 Unauthorized`, `404 Not Found`                    |
+| GET    | `/api/projects`      | Yes  | List the current user’s projects                   | `200 OK`         | `401 Unauthorized`                                     |
+| POST   | `/api/projects`      | Yes  | Create a project                                   | `201 Created`    | `400 Bad Request`, `401 Unauthorized`                  |
+| GET    | `/api/projects/{id}` | Yes  | Read one owned project                             | `200 OK`         | `401 Unauthorized`, `404 Not Found`                    |
+| PATCH  | `/api/projects/{id}` | Yes  | Update one owned project                           | `200 OK`         | `400 Bad Request`, `401 Unauthorized`, `404 Not Found` |
+| DELETE | `/api/projects/{id}` | Yes  | Delete one owned project                           | `204 No Content` | `401 Unauthorized`, `404 Not Found`                    |
 
 ### Key Entities
 
 - **User**: An account holder, identified by a unique email, with protected authentication data and account timestamps.
-- **Item**: A user-owned organization record with an identifier, required title, optional details, owner, creation timestamp, and last-updated timestamp.
+- **Item**: A user-owned organization record with an identifier, required title, optional details, optional project association, owner, creation timestamp, and last-updated timestamp. Items without a project association belong to the personal board.
+- **Project**: A user-owned workspace record with a name, optional description, and creation/update timestamps.
 - **Session**: Authenticated access associated with a user and its expiration state; it is not exposed as item data.
 
 ### Assumptions
 
 - Email and password registration is the initial sign-up method; organization SSO and invitations are out of scope for this specification.
-- Each item has one owner; shared editing, roles, comments, attachments, and board-to-board relationships are future capabilities.
+- Each item has one owner and belongs either to the personal board or one project board; shared editing, roles, comments, and attachments are future capabilities.
 - Deletion is permanent from the user’s perspective and does not require an end-user recovery flow in this release.
 - The initial item list uses a stable default ordering and does not require advanced search, filtering, or pagination until scale requires it.
 
