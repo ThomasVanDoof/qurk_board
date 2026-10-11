@@ -14,7 +14,7 @@ export default function Home() {
             <span className="text-[#3A5A40]">See the Bigger Picture.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#3A5A40]">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#301934]">
             Qurk Board is a visual organization tool that lets you turn your ideas and plans into
             digital notes, move them around, and connect them together with pathways.
           </p>
@@ -28,7 +28,7 @@ export default function Home() {
             </a>{" "}
             <a
               href="/register"
-              className="rounded-lg border border-[#657A5B] bg-white px-6 py-3 font-medium text-[#344E41] shadow-sm transition hover:bg-[#EDF1E7]"
+              className="rounded-lg border border-[#301934] bg-white px-6 py-3 font-medium text-[#344E41] shadow-sm transition hover:bg-[#EDF1E7]"
             >
               Create an Account
             </a>{" "}
@@ -37,9 +37,9 @@ export default function Home() {
       </section>
 
       {/* Feature Cards */}
-      <div className="mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
-        <div className="rounded-xl border border-[#657A5B] bg-white p-6 text-left shadow-sm">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#A3B18A] font-bold text-[#1F3329]">
+      <div className="mx-auto mt-16 grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="rounded-xl border border-[#3A5A40] bg-white p-6 text-left shadow-sm">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
             1
           </div>
 
@@ -50,7 +50,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="rounded-xl border border-[#657A5B] bg-white p-6 text-left shadow-sm">
+        <div className="rounded-xl border border-[#301934] bg-white p-6 text-left shadow-sm">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
             2
           </div>
@@ -62,7 +62,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="rounded-xl border border-[#657A5B] bg-white p-6 text-left shadow-sm">
+        <div className="rounded-xl border border-[#301934] bg-white p-6 text-left shadow-sm">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#3A5A40] font-bold text-white">
             3
           </div>
