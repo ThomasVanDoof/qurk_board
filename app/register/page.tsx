@@ -91,7 +91,7 @@ export default function RegisterPage() {
 
               <h1 className="text-3xl font-bold text-[#344E41]">Create your account</h1>
 
-              <p className="mt-2 text-sm text-[#588157]">
+              <p className="mt-2 text-sm text-[#527a51]">
                 Start organizing your ideas with Qurk Board.
               </p>
             </div>
@@ -179,7 +179,7 @@ export default function RegisterPage() {
             </form>
 
             {/* Login */}
-            <p className="mt-7 text-center text-sm text-[#588157]">
+            <p className="mt-7 text-center text-sm text-[#527a51]">
               Already have an account?{" "}
               <Link
                 href="/login"

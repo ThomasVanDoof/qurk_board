@@ -65,7 +65,7 @@ export default function LoginPage() {
             <h1 className="text-3xl font-semibold tracking-tight text-dark sm:text-4xl">
               Welcome back
             </h1>
-            <p className="mt-2 text-sm text-forest/75 sm:text-base">
+            <p className="mt-2 text-sm text-forest sm:text-base">
               Sign in to continue to your account
             </p>
           </div>
