@@ -2,7 +2,7 @@
 
 ## Product Summary
 
-Qurk Board helps people organize ideas and follow-ups that are otherwise scattered across notes and conversations. It gives individuals and small teams a visual workspace for capturing short notes, arranging them, connecting related thoughts, and keeping separate projects in one place without the overhead of a larger project-management tool.
+Qurk Board helps people organize ideas and follow-ups that are otherwise scattered across notes and conversations. It gives individuals a visual workspace for capturing short notes, arranging them, connecting related thoughts, and keeping separate projects in one place without the overhead of a larger project-management tool.
 
 The main flow is to create an account, add notes to a personal board, or create a project and open its dedicated board. Each project's notes are saved separately, so returning to a project restores that project's board rather than mixing notes between projects. Board note text and projects are saved to the signed-in user's MongoDB account; board positions, pins, and connections remain browser-local. A profile view lets the user update their display name.
 

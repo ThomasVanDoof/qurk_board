@@ -3,7 +3,7 @@
 **Project Title**: Qurk Board  
 **Description**: A focused organization app that lets people capture, browse, maintain, and remove board items in one dependable workspace.  
 **Purpose**: Help users turn loose work, ideas, and follow-ups into an organized collection they can quickly maintain.  
-**Target Audience**: Individuals and small teams who need a simple shared place to manage organized items without a complex project-management workflow.  
+**Target Audience**: Individuals who need a simple shared place to manage organized items without a complex project-management workflow.  
 **Feature Branch**: `001-qurk-board`  
 **Created**: 2026-09-11  
 **Status**: Draft  
