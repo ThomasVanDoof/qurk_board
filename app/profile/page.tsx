@@ -79,7 +79,7 @@ export default function ProfilePage() {
     <main className="min-h-screen bg-[#DAD7CD] px-6 py-12 text-[#344E41]">
       <section className="mx-auto max-w-xl">
         <h1 className="text-3xl font-bold">Your profile</h1>
-        <p className="mt-2 text-[#3A5A40]">Account details</p>
+        <p className="mt-2 text-[#301934]">Account details</p>
         {isLoading ? (
           <p role="status" className="mt-8">
             Loading profile...

@@ -119,7 +119,7 @@ export default function Projects() {
       <section className="mx-auto max-w-6xl px-6 py-12">
         <header className="mb-8">
           <h1 className="text-4xl font-bold">My Projects</h1>
-          <p className="mt-2 text-[#3A5A40]">View and organize your projects.</p>
+          <p className="mt-2 text-[#301934]">View and organize your projects.</p>
         </header>
 
         {error && (
@@ -166,7 +166,7 @@ export default function Projects() {
         {isLoading ? (
           <p role="status">Loading projects...</p>
         ) : projects.length === 0 ? (
-          <p className="border-t border-[#657A5B] py-8 text-[#3A5A40]">
+          <p className="border-t border-[#657A5B] py-8 text-[#301934]">
             No projects yet. Create one to get started.
           </p>
         ) : (
