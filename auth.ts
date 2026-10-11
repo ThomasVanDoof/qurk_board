@@ -38,26 +38,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        const user = await findUserByEmail(email);
+       
+const user = await findUserByEmail(email);
 
-        if (!user || typeof user.password !== "string") {
-          return null;
-        }
+if (!user || typeof user.passwordHash !== "string") {
+  return null;
+}
 
-        const passwordMatches = await bcrypt.compare(
-          password,
-          user.password
-        );
+const passwordMatches = await bcrypt.compare(
+  password,
+  user.passwordHash
+);
 
-        if (!passwordMatches) {
-          return null;
-        }
+if (!passwordMatches) {
+  return null;
+}
 
-        return {
-          id: user._id.toString(),
-          name: user.username,
-          email: user.email,
-        };
+return {
+  id: user._id.toString(),
+  name: user.username,
+  email: user.email,
+};
+
       },
     }),
   ],
